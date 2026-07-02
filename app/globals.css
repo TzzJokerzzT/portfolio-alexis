@@ -3,11 +3,21 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Persona 5 Color Palette */
+  --p5-red: #ff0000;
+  --p5-black: #0a0a0a;
+  --p5-white: #ffffff;
+  --p5-yellow: #ffd700;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-p5-red: var(--p5-red);
+  --color-p5-black: var(--p5-black);
+  --color-p5-white: var(--p5-white);
+  --color-p5-yellow: var(--p5-yellow);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -19,8 +29,88 @@
   }
 }
 
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar - P5 Style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--p5-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--p5-red);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cc0000;
+}
+
+/* Selection Style */
+::selection {
+  background: var(--p5-red);
+  color: var(--p5-white);
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid var(--p5-red);
+  outline-offset: 2px;
+}
+
+/* Animation Utilities */
+@keyframes pulse-red {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+  }
+}
+
+.animate-pulse-red {
+  animation: pulse-red 2s infinite;
+}
+
+/* P5 Diagonal Pattern */
+.p5-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 0, 0, 0.1) 10px,
+    rgba(255, 0, 0, 0.1) 11px
+  );
+}
+
+/* Text Shadow Utilities */
+.text-shadow-p5 {
+  text-shadow:
+    4px 4px 0 var(--p5-red),
+    -1px -1px 0 var(--p5-red),
+    1px -1px 0 var(--p5-red),
+    -1px 1px 0 var(--p5-red);
+}
+
+/* Skew Card Base */
+.skew-card {
+  transform: skewX(-3deg);
+}
+
+.skew-card > * {
+  transform: skewX(3deg);
 }
