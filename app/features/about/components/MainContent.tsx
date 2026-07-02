@@ -23,7 +23,7 @@ export const MainContent = () => {
         <ContentSection
           personalInformation={personalInformation}
           introduction={introduction}
-          skill={skill}
+          skill={skill || []}
         />
       </div>
     </div>
