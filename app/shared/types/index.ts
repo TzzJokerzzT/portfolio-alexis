@@ -25,3 +25,9 @@ export interface SocialLink {
   url: string;
   icon: string;
 }
+
+export interface SkillItemProps {
+  name: string;
+  icon?: string;
+  index: number;
+}

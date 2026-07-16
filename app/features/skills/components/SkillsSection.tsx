@@ -1,119 +1,15 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
 import { useSkills } from "@/app/shared/api/hooks/useSkill";
-import type { SkillListResponse } from "@/app/shared/api/types";
+import { SkillItem } from "@/app/shared/components/SkillItems";
 import { SectionTitle } from "@/app/shared/components/ui";
-import { fadeInUp, smoothTransition, staggerContainer } from "@/app/shared/lib";
-
-const CATEGORY_STYLE: Record<string, { accent: string; shadow: string }> = {
-  Frontend: {
-    accent: "bg-p5-red",
-    shadow: "shadow-[6px_6px_0_0_#ff0000]",
-  },
-  Styling: {
-    accent: "bg-fuchsia-500",
-    shadow: "shadow-[6px_6px_0_0_#d946ef]",
-  },
-  Backend: {
-    accent: "bg-emerald-500",
-    shadow: "shadow-[6px_6px_0_0_#10b981]",
-  },
-  Testing: {
-    accent: "bg-amber-500",
-    shadow: "shadow-[6px_6px_0_0_#f59e0b]",
-  },
-  Tools: {
-    accent: "bg-blue-500",
-    shadow: "shadow-[6px_6px_0_0_#3b82f6]",
-  },
-  "Package Manager": {
-    accent: "bg-orange-500",
-    shadow: "shadow-[6px_6px_0_0_#f97316]",
-  },
-  Mobile: {
-    accent: "bg-violet-500",
-    shadow: "shadow-[6px_6px_0_0_#8b5cf6]",
-  },
-  IDE: {
-    accent: "bg-cyan-500",
-    shadow: "shadow-[6px_6px_0_0_#06b6d4]",
-  },
-};
-
-const FALLBACK_STYLE = {
-  accent: "bg-p5-red",
-  shadow: "shadow-[6px_6px_0_0_#ff0000]",
-};
-
-function groupByCategory(skills: SkillListResponse[]) {
-  return skills.reduce<
-    Record<string, { category: string; skills: SkillListResponse[] }>
-  >((acc, skill) => {
-    const cat = skill.category;
-    if (!acc[cat]) {
-      acc[cat] = { category: cat, skills: [] };
-    }
-    acc[cat].skills.push(skill);
-    return acc;
-  }, {});
-}
-
-interface SkillItemProps {
-  name: string;
-  icon?: string;
-  index: number;
-}
-
-function SkillItem({ name, icon, index }: SkillItemProps) {
-  return (
-    <motion.div
-      variants={fadeInUp}
-      transition={{ ...smoothTransition, delay: index * 0.05 }}
-      className="flex items-center gap-2 px-2 py-1.5 rounded-sm
-                 hover:bg-black/5 dark:hover:bg-white/5 transition-colors
-                 skew-x-[-1deg]"
-    >
-      {icon && (
-        <Image
-          width={240}
-          height={240}
-          src={`/${icon}`}
-          alt={name}
-          className="w-5 h-5 object-contain flex-shrink-0"
-          loading="lazy"
-        />
-      )}
-      <span className="text-xs font-bold uppercase tracking-wider text-p5-black dark:text-white truncate">
-        {name}
-      </span>
-    </motion.div>
-  );
-}
-
-function LoadingSkeleton() {
-  return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 mt-16">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div
-          key={i}
-          className="bg-white dark:bg-p5-black p-5 skew-x-[-2deg] animate-pulse"
-        >
-          <div className="skew-x-[2deg]">
-            <div className="h-8 w-24 bg-gray-200 dark:bg-gray-800 mb-5" />
-            {Array.from({ length: 4 }).map((_, j) => (
-              <div
-                key={j}
-                className="h-6 w-full bg-gray-100 dark:bg-gray-800 mb-2"
-              />
-            ))}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
+import { ErrorMsg } from "@/app/shared/components/ui/ErrorMessage";
+import { LoadingSkeleton } from "@/app/shared/components/ui/LoadingSkeleton";
+import { NotFound } from "@/app/shared/components/ui/NotFound";
+import { fadeInUp, staggerContainer } from "@/app/shared/lib";
+import { CATEGORY_STYLE, FALLBACK_STYLE } from "../utils/constants";
+import { groupByCategory } from "../utils/groupByCategory";
 
 export function SkillsSection() {
   const { data: skills, isLoading, isError, error } = useSkills();
@@ -149,23 +45,17 @@ export function SkillsSection() {
           Skills
         </SectionTitle>
 
-        {isLoading && <LoadingSkeleton />}
+        {isLoading && <LoadingSkeleton smGrid={"2"} lgGrid={"3"} length={6} />}
 
         {isError && (
-          <div className="text-center py-12">
-            <p className="text-p5-red font-bold text-lg">
-              Failed to load skills
-            </p>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">
-              {error?.message ?? "Please check your connection and try again."}
-            </p>
-          </div>
+          <ErrorMsg
+            message="Failed to load skills!"
+            errorMsg={error?.message}
+          />
         )}
 
-        {!isLoading && !isError && categoryGroups.length === 0 && (
-          <p className="text-center text-gray-500 dark:text-gray-400 py-12">
-            No skills found.
-          </p>
+        {!isLoading && !isError && skills?.length === 0 && (
+          <NotFound message="Not skill found!" />
         )}
 
         {!isLoading && !isError && categoryGroups.length > 0 && (
