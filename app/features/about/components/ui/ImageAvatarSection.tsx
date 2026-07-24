@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import Image from "next/image";
 import { fadeInLeft, smoothTransition } from "@/app/shared/lib";
 
 export const ImageAvatarSection = () => {
@@ -20,16 +21,23 @@ export const ImageAvatarSection = () => {
         <div className="relative skew-x-[-3deg] bg-p5-black p-2">
           <div className="flex aspect-square items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
             {/* Placeholder avatar - P5 style mask silhouette */}
-            <svg
-              viewBox="0 0 100 100"
-              className="h-3/4 w-3/4 text-p5-red"
-              fill="currentColor"
-              role="img"
-              aria-label="Developer avatar silhouette"
-            >
-              <title>Developer Avatar</title>
-              <path d="M50 10 C30 10 15 30 15 50 C15 70 30 90 50 90 C70 90 85 70 85 50 C85 30 70 10 50 10 Z M35 40 C35 35 40 32 45 35 L50 40 L55 35 C60 32 65 35 65 40 C65 45 55 55 50 60 C45 55 35 45 35 40 Z" />
-            </svg>
+            <Image
+              className="w-full h-full rotate-90"
+              src="/images/me.png"
+              width={200}
+              height={200}
+              alt="Personal photo"
+            />
+            {/* <svg */}
+            {/*   viewBox="0 0 100 100" */}
+            {/*   className="h-3/4 w-3/4 text-p5-red" */}
+            {/*   fill="currentColor" */}
+            {/*   role="img" */}
+            {/*   aria-label="Developer avatar silhouette" */}
+            {/* > */}
+            {/*   <title>Developer Avatar</title> */}
+            {/*   <path d="M50 10 C30 10 15 30 15 50 C15 70 30 90 50 90 C70 90 85 70 85 50 C85 30 70 10 50 10 Z M35 40 C35 35 40 32 45 35 L50 40 L55 35 C60 32 65 35 65 40 C65 45 55 55 50 60 C45 55 35 45 35 40 Z" /> */}
+            {/* </svg> */}
           </div>
         </div>
 
