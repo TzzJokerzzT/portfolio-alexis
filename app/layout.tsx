@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Phantom Developer | Frontend Portfolio",
+  title: "Alexis Buelvas | Full-Stack Portfolio",
   description:
-    "A phantom thief of the digital realm, stealing hearts through exceptional user experiences and elegant code. Frontend Developer portfolio inspired by Persona 5.",
+    "Full-Stack Developer with 6+ years of experience as a Frontend developer and 3 year as a Backend Node Developer. Full-Stack Developer portfolio inspired by Persona 5.",
   keywords: [
     "Frontend Developer",
     "React",
@@ -25,11 +25,11 @@ export const metadata: Metadata = {
     "Portfolio",
     "Web Developer",
   ],
-  authors: [{ name: "Phantom Developer" }],
+  authors: [{ name: "Alexis Buelvas" }],
   openGraph: {
-    title: "Phantom Developer | Frontend Portfolio",
+    title: "Alexis Buelvas | Full-Stack Portfolio",
     description:
-      "A phantom thief of the digital realm, stealing hearts through exceptional user experiences.",
+      "Full-Stack Developer with 6+ years of experience as a Frontend developer and 3 year as a Backend Node Developer.",
     type: "website",
   },
 };
