@@ -1,23 +1,14 @@
 "use client";
 
+import { useIsFetching } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
 
 export function Preloader() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const fetchingCount = useIsFetching();
 
   return (
     <AnimatePresence>
-      {isLoading && (
+      {fetchingCount && (
         <motion.div
           initial={{ opacity: 1 }}
           exit={{
